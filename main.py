@@ -3,11 +3,18 @@ from __future__ import annotations
 import argparse
 import csv
 import re
+import sys
 from pathlib import Path
 
 from openpyxl import load_workbook
 
 SUPPORTED_EXTENSIONS = {".xlsx", ".xlsm", ".xltx", ".xltm"}
+
+
+def configure_stdio() -> None:
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(errors="replace")
 
 
 def parse_delimiter(value: str) -> str:
@@ -164,6 +171,7 @@ def convert_excel_file(
 
 
 def main() -> int:
+    configure_stdio()
     args = parse_args()
     output_dir = args.output_dir.resolve() if args.output_dir else None
     excel_files = collect_excel_files(args.paths, recursive=args.recursive)
