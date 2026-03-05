@@ -27,7 +27,13 @@ jobs:
         run: pyinstaller --onefile --name excel_to_csv main.py
 
       - name: Smoke test
-        run: dist\excel_to_csv.exe --help
+        shell: pwsh
+        env:
+          PYTHONUTF8: "1"
+          PYTHONIOENCODING: "utf-8"
+        run: |
+          [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+          .\dist\excel_to_csv.exe --help
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
