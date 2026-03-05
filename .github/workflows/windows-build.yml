@@ -5,6 +5,9 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: write
+
 jobs:
   build-windows:
     runs-on: windows-latest
@@ -40,3 +43,10 @@ jobs:
         with:
           name: excel-to-csv-windows
           path: dist/excel_to_csv.exe
+
+      - name: Publish GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/excel_to_csv.exe
+          generate_release_notes: true
