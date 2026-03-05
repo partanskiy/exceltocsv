@@ -1,0 +1,9 @@
+[project]
+name = "python"
+version = "0.1.0"
+description = "Excel to CSV converter with ';' delimiter"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "openpyxl>=3.1.5",
+]
